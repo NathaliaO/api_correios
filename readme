@@ -1,0 +1,40 @@
+Clone o projeto e rode o comando 
+
+docker compose up -d
+
+Este comando irá criar os container necessário e também o banco de dados e as tabelas que serão utilizadas.
+
+A api poderá ser  acessada através da rota no postman
+
+* Para autenticação, no postman selecione o metodo POST e utilize a rota a seguir:
+http://localhost:8080/
+No body, selecione a opção "raw" e JSON, e informe os dados da seguinte maneira:
+
+{
+    "user": "",
+    "password": ""
+}
+
+Ao ser autenticado com sucesso irá retornar a  mensagem: "Authenticated successfully", 
+Se tentar autenticar novamente, irá mostrar a mensagem "You are already authenticated."
+Só será possivel fazer uma nova autenticação quando o token for expirado.
+
+* Para gravar as cidades de um determinado país, no postman selecione o metodo GET e utilize a rota a seguir:
+http://localhost:8080/country
+No body, selecione a opção "raw" e JSON, e informe os dados  da seguinte maneira:
+
+{
+    "country": ""
+}
+
+Se nào informar nenhuma sigla  do país, irá retornar a mensagem pedido para ser informado.
+Se não estiver autenticado:
+    - Irá retornar uma mensagem informando que primeiro precisa da autenticação.
+Se Já estiver autenticado:
+    - A API irá verificar se o token é válido: se for válido irá salvar os dados no banco de dados, se não irá solicitar para fazer a autenticacão primeiro.
+
+Antes de salvar os dados, a api faz uma consulta no banco para verificar se já exite ou não cidades daquele pais. Se não existir irá fazer a inclusão, se não apenas irá retornar uma mensagem
+
+* Para fazer a leitura/inclusão dos dados do arquivo CSV
+No Postman selecione o metodo POST, e utilize a rota http://localhost:8080/file
+No body, selecione a opção "binary", e selecione o arquivo desejado.
